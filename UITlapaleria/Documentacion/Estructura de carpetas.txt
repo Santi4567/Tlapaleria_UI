@@ -1,0 +1,9 @@
+﻿Views: Aquí guardaremos todos tus archivos .xaml (como LoginView.xaml, MenuView.xaml). Estos son tus componentes principales.
+
+ViewModels: Aquí irán las clases .cs que controlan el estado de cada vista (como LoginViewModel.cs).
+
+Models: Clases de C# puras para mapear los datos de tu base de datos (por ejemplo, las respuestas JSON que te mande tu backend).
+
+Services: Clases dedicadas exclusivamente a hacer las peticiones HTTP (GET, POST) hacia tu backend en .NET.
+
+Components: Aquí pondremos los UserControl (tus componentes reutilizables como el Header, Sidebar, tarjetas de productos, etc.).
