@@ -26,25 +26,31 @@
 
                 <TextBlock Text="Usuario" Foreground="Black" FontWeight="Medium" Margin="5,0,0,5"/>
                 <Border BorderBrush="#F73811" BorderThickness="1.5" CornerRadius="10" Margin="0,0,0,20">
-                    <TextBox x:Name="txtUser" BorderThickness="0" Background="Transparent" 
+                    <TextBox x:Name="txtUser" Text="{Binding UsuarioText, UpdateSourceTrigger=PropertyChanged}" 
+                             BorderThickness="0" Background="Transparent" 
                              materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
                              VerticalContentAlignment="Center" Padding="12,8" FontSize="15"/>
                 </Border>
 
                 <TextBlock Text="Contraseña" Foreground="Black" FontWeight="Medium" Margin="5,0,0,5"/>
-                <Border BorderBrush="#F73811" BorderThickness="1.5" CornerRadius="10" Margin="0,0,0,30">
+                <Border BorderBrush="#F73811" BorderThickness="1.5" CornerRadius="10" Margin="0,0,0,20">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="38*"/>
+                            <ColumnDefinition Width="191*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <PasswordBox x:Name="txtPassword" BorderThickness="0" Background="Transparent"
+                        <PasswordBox x:Name="txtPasswordHidden" BorderThickness="0" Background="Transparent"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
-                                     VerticalContentAlignment="Center" Padding="12,8"/>
+                                     VerticalContentAlignment="Center" Padding="12,8" Grid.ColumnSpan="2"/>
 
-                        <ToggleButton x:Name="btnShowPass" Grid.Column="1" Style="{StaticResource MaterialDesignActionToggleButton}"
-                                      Width="30" Height="30" Background="Transparent" BorderBrush="Transparent">
+                        <TextBox x:Name="txtPasswordVisible" Visibility="Collapsed" BorderThickness="0" Background="Transparent"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 VerticalContentAlignment="Center" Padding="12,8" Grid.ColumnSpan="2"/>
+
+                        <ToggleButton x:Name="btnShowPass" Click="btnShowPass_Click" Grid.Column="2" Style="{StaticResource MaterialDesignActionToggleButton}"
+                                      Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" Margin="0,1,0,1">
                             <materialDesign:ToggleButtonAssist.OnContent>
                                 <materialDesign:PackIcon Kind="Eye" Foreground="#E53935"/>
                             </materialDesign:ToggleButtonAssist.OnContent>
@@ -53,7 +59,10 @@
                     </Grid>
                 </Border>
 
-                <Button Content="INGRESAR" Height="45" Width="160"
+                <TextBlock Text="{Binding MensajeError}" Foreground="Red" FontWeight="Bold" 
+                           TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                <Button Content="INGRESAR" Click="btnIngresar_Click" Height="45" Width="160"
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Background="#F73811" BorderBrush="#F73811"
                         materialDesign:ButtonAssist.CornerRadius="10"

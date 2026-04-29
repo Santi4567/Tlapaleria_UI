@@ -1,41 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using UITlapaleria.ViewModels;
 
 namespace UITlapaleria.Views
 {
-    /// <summary>
-    /// Lógica de interacción para LoginView.xaml
-    /// </summary>
     public partial class LoginView : Window
     {
+        private LoginViewModel _viewModel;
+
         public LoginView()
         {
             InitializeComponent();
+            _viewModel = new LoginViewModel();
+            this.DataContext = _viewModel; // Conectamos la vista al estado
         }
 
-        private void txtUser_TextChanged(object sender, TextChangedEventArgs e)
+        // Lógica para mostrar/ocultar contraseña
+        private void btnShowPass_Click(object sender, RoutedEventArgs e)
         {
-
+            if (btnShowPass.IsChecked == true)
+            {
+                // Mostrar texto plano
+                txtPasswordVisible.Text = txtPasswordHidden.Password;
+                txtPasswordVisible.Visibility = Visibility.Visible;
+                txtPasswordHidden.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // Ocultar texto plano
+                txtPasswordHidden.Password = txtPasswordVisible.Text;
+                txtPasswordHidden.Visibility = Visibility.Visible;
+                txtPasswordVisible.Visibility = Visibility.Collapsed;
+            }
         }
+
+        // Lógica del botón Ingresar
+        private async void btnIngresar_Click(object sender, RoutedEventArgs e)
+        {
+            // Sincronizar por si estaba visible u oculta
+            string passwordActual = btnShowPass.IsChecked == true ? txtPasswordVisible.Text : txtPasswordHidden.Password;
+
+            // Llamamos al ViewModel
+            bool exito = await _viewModel.IniciarSesionAsync(passwordActual);
+
+            if (exito)
+            {
+                MessageBox.Show("¡Login exitoso!", "Bienvenido", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Aquí haremos la transición a la pantalla de carga.
+                // LoadingView loading = new LoadingView();
+                // loading.Show();
+                // this.Close();
+            }
+        }
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown(); // Cierra toda la aplicación
+            Application.Current.Shutdown();
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized; // Minimiza la ventana
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
